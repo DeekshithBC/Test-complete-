@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root signature="{9252F941-DB23-4FCA-AA50-858B33BB4A19}" version="11.40">
+	<children>
+		<child name="Installtion" key="{89347990-3AD0-474E-B50F-6FC6FEC50785}" path="Installtion.js" />
+		<child name="Service" key="{78BF0403-6508-48CE-8B48-93CF162CFDF6}" path="Service.js" />
+		<child name="uninstall" key="{0E2D7A02-CBAA-4F24-B8EE-1BFC6AB16BC1}" path="uninstall.js" />
+		<child name="Repair" key="{BDF56715-B762-4860-AD59-6BF5EB0229BC}" path="Repair.js" />
+		<child name="Upgrade" key="{F88BE6CA-F0E3-4891-90CF-1644BF5B4CFF}" path="Upgrade.js" />
+		<child name="Files_check" key="{88D3C178-FC19-40B9-83AD-E4273EEB2EE8}" path="Files_check.js" />
+		<child name="Sign_unsign" key="{0F8FD60A-152C-48C6-935B-0DD94FF1981F}" path="Sign_unsign.js" />
+		<child name="NewUninstall" key="{61AC8920-F08E-468C-8BE4-4B2F8421C297}" path="NewUninstall.js" />
+		<child name="function" key="{857C271C-0ADC-4A07-811A-122E1618BFE6}" path="function.js" />
+	</children>
+</Root>

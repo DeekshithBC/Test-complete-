@@ -1,0 +1,50 @@
+﻿function Service(){ {
+
+ try{
+  var shell = Sys.OleObject("Shell.Application");
+  var registryKey = "HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Thermo Scientific\\Ardia\\Ardia Platform Link";
+  var valueName = "Name";
+  var registryValue = Sys.OleObject("WScript.Shell").RegRead(registryKey + "\\" + valueName);
+  if (registryValue === "Ardia Platform Link") {
+    isWindowsServiceRunning();
+      } else {
+      Log.Message("Ardia already Uninstalled");
+    }
+  }
+  catch (e)
+  {
+ Log.Message("Ardia already Uninstalled");
+ }
+}
+
+function isWindowsServiceRunning() {
+  var services = [
+    { name: "Thermo Scientific Ardia Device Integrator Service" },
+    { name: "Thermo Scientific Ardia Device Registration Service" },
+    { name: "Thermo Scientific Ardia Local Device Service" },
+    { name: "Thermo Scientific Ardia Instrument Service Facade" },
+    { name: "Thermo Scientific Ardia Proxy Client" },
+    { name: "RabbitMQ" }
+  ];
+
+  for (var i = 0; i < services.length; i++) {
+    var service = services[i];
+    var serviceName = service.name;
+    try {
+      var wmi = Sys.OleObject("WbemScripting.SWbemLocator");
+      var serviceObject = wmi.ConnectServer().Get("Win32_Service.Name='" + serviceName + "'");
+      if (serviceObject != null) {
+        if (serviceObject.State == "Running")
+          Log.Message("The service '" + serviceName + "' exists and is running.");
+        else
+          Log.Message("The service '" + serviceName + "' exists but is not running.");
+      } else {
+        Log.Message("The service '" + serviceName + "' does not exist.");
+      }
+    } catch (e) {
+      Log.Error("Error occurred while checking service '" + serviceName + "': " + e.description);
+    }
+  }
+}}
+
+

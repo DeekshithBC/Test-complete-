@@ -1,0 +1,27 @@
+﻿
+
+function SearchRegistryForArdia() {
+          // Create a WScript.Shell COM object to access the registry
+        var wshShell = Sys.OleObject("WScript.Shell");
+
+        // Specify the registry key and the parent key where you want to search
+        var parentKey = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall";
+
+        // Get a list of all subkey names under the parent key
+        var subkeyNames = wshShell.RegRead(parentKey);
+
+        // Convert the subkey names to an array
+        subkeyNames = subkeyNames.split("\n");
+
+        // Loop through the subkeys to find the one containing "ardia"
+        for (var i = 0; i < subkeyNames.length; i++) {
+            var subkeyName = subkeyNames[i].trim();
+            
+            if (subkeyName.indexOf("ardia") !== -1) {
+                Log.Message("Found key containing 'ardia': " + subkeyName);
+                // You can perform further actions here if needed
+            }
+        }
+   
+}
+

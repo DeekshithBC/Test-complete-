@@ -1,0 +1,48 @@
+﻿function dee(){function CountFilesAndTypesInDirectory(directoryPath) {
+  var fsObj = Sys.OleObject("Scripting.FileSystemObject");
+  var mainFolder = fsObj.GetFolder(directoryPath);
+
+  function processFolder(folder) {
+    var fileCount = 0;
+    var fileTypes = {};
+
+    var filesEnum = new Enumerator(folder.Files);
+    for (; !filesEnum.atEnd(); filesEnum.moveNext()) {
+      var file = filesEnum.item();
+      var fileName = file.Name;
+      var fileType = fileName.split('.').pop().toLowerCase(); // Extract file extension
+
+      if (!fileTypes[fileType]) {
+        fileTypes[fileType] = 1;
+      } else {
+        fileTypes[fileType]++;
+      }
+
+      fileCount++;
+    }
+
+    // Log the file types and counts for the current folder
+    Log.Message("Folder: " + folder.Path);
+    Log.Message("Number of files in folder: " + fileCount);
+    Log.Message("File types and counts:");
+    for (var type in fileTypes) {
+      Log.Message(type + ": " + fileTypes[type]);
+    }
+    Log.Message(""); // Add an empty line for separation
+
+    var subfoldersEnum = new Enumerator(folder.Subfolders);
+    for (; !subfoldersEnum.atEnd(); subfoldersEnum.moveNext()) {
+      var subfolder = subfoldersEnum.item();
+      processFolder(subfolder); // Recursively process subfolders
+    }
+  }
+
+  processFolder(mainFolder); // Start processing from the main folder
+}
+
+// Usage example
+var directoryPath = "C:\\Program Files\\Thermo Scientific\\Ardia";
+CountFilesAndTypesInDirectory(directoryPath);
+
+
+}

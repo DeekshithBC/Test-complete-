@@ -1,0 +1,39 @@
+﻿function OpenPowerShell() {
+    // Define the path to your PowerShell script
+    var psScriptPath = "C:\\Deekshith\\Signn.ps1";
+    
+    try {
+        // Create a new Process object for PowerShell
+        var shell = new ActiveXObject("WScript.Shell");
+        var process = shell.Exec("powershell.exe -File " + psScriptPath);
+
+        // Wait for the PowerShell process to finish
+        while (process.Status == 0) {
+            Delay(100); // Wait for 100 milliseconds
+        }
+
+        // Check the exit code
+        var exitCode = process.ExitCode;
+        if (exitCode === 0) {
+            Log.Message("PowerShell script executed successfully.");
+            
+            // Read and log the PowerShell script output line by line
+            var output = process.StdOut.ReadAll();
+            var outputLines = output.split("\n");
+            for (var i = 0; i < outputLines.length; i++) {
+                Log.Message("PowerShell Output: " + outputLines[i]);
+            }
+        } else {
+            Log.Error("PowerShell script execution failed with exit code: " + exitCode);
+            
+            // Read and log the PowerShell script error output line by line
+            var errorOutput = process.StdErr.ReadAll();
+            var errorLines = errorOutput.split("\n");
+            for (var j = 0; j < errorLines.length; j++) {
+                Log.Error("PowerShell Error Output: " + errorLines[j]);
+            }
+        }
+    } catch (e) {
+        Log.Error("Error executing PowerShell script: " + e.message);
+    }
+}
